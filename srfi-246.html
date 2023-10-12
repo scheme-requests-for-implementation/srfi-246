@@ -81,6 +81,54 @@ Guardians allow objects to be saved from deallocation indefinitely so that they 
 
 <p>In any case, <code>unregister-guardian</code> returns a list containing the representative objects corresponding to the objects that it unregisters, with duplicates as appropriate if the same object is registered more than once with <em>guardian</em>. Objects already resurrected but not yet retrieved from <em>guardian</em> are not included in the list but remain retrievable from <em>guardian</em>.</p>
 
+<h2 id="abstract-example">Abstract Example</h2>
+<p>This example shows how to manage manually allocated and deallocated
+resources automatically by wrapping them in a <code>handle</code> record
+type, which can also contain auxiliary data. For example, a resource
+might be a POSIX file descriptor and a handle might be a port.</p>
+<p>This implementation is not thread-safe.</p>
+<pre><code>(library (resources)
+  (export
+    make-handle handle? get-handle-resource
+    get-handle-auxdata set-handle-auxdata!)
+  (import
+    (scheme base)
+    (scheme guardians))
+  (begin
+    ;;; Allocate resources using handles
+
+    ;; Allocate and deallocate a resource which is not managed by Scheme
+
+    (define (allocate-resource) ...)
+    (define (free-resource resource) ...)
+
+    ;; Handle type.  Auxdata is Scheme data associated with the resource.
+
+    (define-record-type handle
+      (raw-make-handle resource auxdata)
+      handle?
+      (auxdata get-handle-auxdata set-handle-auxdata!)
+      (resource get-resource))
+
+    ;; The global guardian for all handles
+    (define handle-guardian (make-guardian))
+
+    ;; Return an initialized handle
+    (define (make-handle auxdata)
+      (let* ((resource
+               (allocate-resource))
+              (handle
+                (raw-make-handle resource auxdata)))
+        ;; Free up resources whose handles are garbage
+        ;; Alternative: (for-each free-resource (unregister-guardian resource-guardian))
+        (let loop ((r (resource-guardian)))
+           (when r
+             (free-resource r)
+             (loop (resource-guardian)))
+        ;; Protect new resource and return handle
+        ;; The resource is the representative object
+        (resource-guardian handle resource)
+        handle)))))</code></pre>
 <h2 id="implementation">Implementation</h2>
 
 <p>A portable implementation of guardians is not possible. Chez Scheme provides guardians as explained in this SRFI; Guile provides them as well, but without <code>guardian-unregister</code>.</p>
