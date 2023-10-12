@@ -41,7 +41,7 @@ Guardians allow objects to be saved from deallocation indefinitely so that they 
 
 <li>It may or may not be appropriate to examine the object being finalized in order to determine what to do with it. In particular, it may be the Right Thing to protect the object from reclamation by placing it in a variable or a container, with or without re-registering it for finalization.</li></ul>
 
-<p>Guardians solve all of these problems at the expense of manual reclamation. Objects are preserved by a guardian; periodically, the guardian mut be invoked to allow them to be reclaimed by the collector or to preserve them.</p>
+<p>Guardians solve all of these problems at the expense of manual reclamation. Objects are preserved by a guardian; periodically, the guardian must be invoked to allow them to be reclaimed by the collector or to preserve them.</p>
 
 <h2 id="specification">Specification</h2>
 
