@@ -119,14 +119,14 @@ might be a POSIX file descriptor and a handle might be a port.</p>
              (handle (raw-make-handle resource auxdata)))
         ;; Free up resources whose handles are garbage.
         ;; Alternative: (for-each free-resource
-        ;;                        (unregister-guardian resource-guardian))
-        (let loop ((r (resource-guardian)))
+        ;;                        (unregister-guardian handle-guardian))
+        (let loop ((r (handle-guardian)))
            (when r
              (free-resource r)
-             (loop (resource-guardian)))
+             (loop (handle-guardian)))
         ;; Protect new resource and return handle.
         ;; The resource is the representative object.
-        (resource-guardian handle resource)
+        (handle-guardian handle resource)
         handle)))))</code></pre>
 <h2 id="implementation">Implementation</h2>
 
