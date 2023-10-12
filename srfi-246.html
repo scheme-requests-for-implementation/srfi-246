@@ -95,9 +95,9 @@ might be a POSIX file descriptor and a handle might be a port.</p>
     (scheme base)
     (scheme guardians))
   (begin
-    ;;; Allocate resources using handles
+    ;;; Allocate resources using handles.
 
-    ;; Allocate and deallocate a resource which is not managed by Scheme
+    ;; Allocate and deallocate a resource which is not managed by Scheme.
 
     (define (allocate-resource) ...)
     (define (free-resource resource) ...)
@@ -113,20 +113,20 @@ might be a POSIX file descriptor and a handle might be a port.</p>
     ;; The global guardian for all handles
     (define handle-guardian (make-guardian))
 
-    ;; Return an initialized handle
+    ;; Return an initialized handle.
     (define (make-handle auxdata)
       (let* ((resource
                (allocate-resource))
               (handle
                 (raw-make-handle resource auxdata)))
-        ;; Free up resources whose handles are garbage
+        ;; Free up resources whose handles are garbage.
         ;; Alternative: (for-each free-resource (unregister-guardian resource-guardian))
         (let loop ((r (resource-guardian)))
            (when r
              (free-resource r)
              (loop (resource-guardian)))
-        ;; Protect new resource and return handle
-        ;; The resource is the representative object
+        ;; Protect new resource and return handle.
+        ;; The resource is the representative object.
         (resource-guardian handle resource)
         handle)))))</code></pre>
 <h2 id="implementation">Implementation</h2>
