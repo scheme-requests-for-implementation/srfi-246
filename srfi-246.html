@@ -115,12 +115,11 @@ might be a POSIX file descriptor and a handle might be a port.</p>
 
     ;; Return an initialized handle.
     (define (make-handle auxdata)
-      (let* ((resource
-               (allocate-resource))
-              (handle
-                (raw-make-handle resource auxdata)))
+      (let* ((resource (allocate-resource))
+             (handle (raw-make-handle resource auxdata)))
         ;; Free up resources whose handles are garbage.
-        ;; Alternative: (for-each free-resource (unregister-guardian resource-guardian))
+        ;; Alternative: (for-each free-resource
+        ;;                        (unregister-guardian resource-guardian))
         (let loop ((r (resource-guardian)))
            (when r
              (free-resource r)
