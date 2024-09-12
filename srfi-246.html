@@ -13,11 +13,22 @@
 
 <h2 id="status">Status</h2>
 
-    <p>This SRFI is currently in <em>draft</em> status.  Here is <a href="https://srfi.schemers.org/srfi-process.html">an explanation</a> of each status that a SRFI can hold.  To provide input on this SRFI, please send email to <code><a href="mailto:srfi+minus+246+at+srfi+dotschemers+dot+org">srfi-246@<span class="antispam">nospam</span>srfi.schemers.org</a></code>.  To subscribe to the list, follow <a href="https://srfi.schemers.org/srfi-list-subscribe.html">these instructions</a>.  You can access previous messages via the mailing list <a href="https://srfi-email.schemers.org/srfi-246/">archive</a>.</p>
+    <p>This SRFI is currently in <em>withdrawn</em> status.  Here is <a href="https://srfi.schemers.org/srfi-process.html">an explanation</a> of each status that a SRFI can hold.  To provide input on this SRFI, please send email to <code><a href="mailto:srfi+minus+246+at+srfi+dotschemers+dot+org">srfi-246@<span class="antispam">nospam</span>srfi.schemers.org</a></code>.  To subscribe to the list, follow <a href="https://srfi.schemers.org/srfi-list-subscribe.html">these instructions</a>.  You can access previous messages via the mailing list <a href="https://srfi-email.schemers.org/srfi-246/">archive</a>.</p>
     <ul>
       <li>Received: 2023-09-23</li>
       <li>Draft #1 published: 2023-10-12</li>
-      <li>60-day deadline: 2023-12-11</li>
+      <li>Withdrawn (superseded
+        by <a href="https://srfi.schemers.org/srfi-254/">SRFI
+        254</a>): 2024-09-11
+
+        <p>editor's summary of reasons for withdrawal: This SRFI was
+        withdrawn by the editor because there had been no progress
+        since 12-2023, and because he hadn't been able to reach the
+        author since 5-2024.  Marc Nieper-Wißkirchen has volunteered
+        to take over, but because he was not a co-author, a new SRFI
+        was forked from this one
+        as <a href="https://srfi.schemers.org/srfi-254/">SRFI
+        254</a>.</p></li>
     </ul>
 
 <h2 id="abstract">Abstract</h2>
@@ -25,10 +36,6 @@
 <p>Guardians allow programs to protect objects from deallocation by the garbage collector and to determine which objects would otherwise have been deallocated. When the object has associated non-memory resources, a program can register it with a guardian. The GC will mark inaccessible objects but will not collect them; at the program's convenience, inaccessible objects are removed from the guardian and their non-memory resources are disposed of.
 
 Guardians allow objects to be saved from deallocation indefinitely so that they can be reused or so that clean-up or other actions can be performed using the data stored within the objects. Guardians avoid the problems associated with classical finalizers detailed in the Rationale section.</p>
-
-<h2 id="issues">Issues</h2>
-
-<p>None at present.</p>
 
 <h2 id="rationale">Rationale</h2>
 
